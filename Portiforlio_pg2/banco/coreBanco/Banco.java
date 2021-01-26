@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Banco {
 	private ArrayList<Agencia> agencias;
 	private ArrayList<Usuario> usuarios;
-	String nome;
+	public String nome;
 
 	public Banco(String nome) {
 		this.nome = nome;
@@ -30,6 +30,12 @@ public class Banco {
 	}
 
 	public void cadastrarConta(String cpf, int numAg) {
+		Agencia ag = buscarAgencia(numAg);
+		Usuario usuario = buscarUsuario(cpf);
+		ag.abrirConta(usuario);
+	}
+
+	public void cadastrarContaVip(String cpf, int numAg) {
 		Agencia ag = buscarAgencia(numAg);
 		Usuario usuario = buscarUsuario(cpf);
 		ag.abrirConta(usuario);

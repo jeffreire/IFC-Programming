@@ -6,6 +6,7 @@ public class Agencia {
 	static protected int ultimaAgencia = 0;
 	protected int numero;
 	private ArrayList<Conta> contas;
+	private ArrayList<ContaVip> contasVips;
 
 	public Agencia() {
 		ultimaAgencia++;
@@ -25,10 +26,36 @@ public class Agencia {
 		}
 	}
 
+	public boolean abrirContaVip(Usuario usuario, int numCont, float valor) {
+		this.depositar(numCont, valor);
+		if (valor >= 5000){ 
+			ContaVip novaConta = new ContaVip(usuario);
+			this.contasVips.add(novaConta);
+			return true;
+		}
+		return false;
+	}
+
+	public void fecharContaVip(int numero) {
+		ContaVip conta = buscarContaVip(numero);
+		if (conta != null) {
+			this.contas.remove(conta);
+		}
+	}
+
 	public Conta buscarConta(int numero) {
 		for (Conta conta : contas) {
 			if (conta.numero == numero) {
 				return conta;
+			}
+		}
+		return null;
+	}
+
+	public ContaVip buscarContaVip(int numero) {
+		for (ContaVip contaVip : contasVips) {
+			if (contaVip.numero == numero) {
+				return contaVip;
 			}
 		}
 		return null;

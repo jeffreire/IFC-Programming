@@ -6,6 +6,7 @@ public class Conta {
 	int numero;
 	private float saldo;
 	Usuario usuario;
+	int numeroSaques = 0;
 	
 	public Conta(Usuario usuario) {
 		contas_abertas++;
@@ -21,6 +22,10 @@ public class Conta {
 	public boolean sacar(float valor) {
 		if (valor <= this.saldo) {
 			this.saldo -= valor;
+			if( this.numeroSaques >= 3)
+				this.saldo -= 0.20;				
+			this.numeroSaques ++;
+			
 			return true;
 		}
 		return false;
