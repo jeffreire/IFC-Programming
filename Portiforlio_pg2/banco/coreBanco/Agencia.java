@@ -18,14 +18,7 @@ public class Agencia {
 		Conta novaConta = new Conta(usuario);
 		this.contas.add(novaConta);
 	}
-
-	public void fecharConta(int numero) {
-		Conta conta = buscarConta(numero);
-		if (conta != null) {
-			this.contas.remove(conta);
-		}
-	}
-
+	
 	public boolean abrirContaVip(Usuario usuario, int numCont, float valor) {
 		this.depositar(numCont, valor);
 		if (valor >= 5000){ 
@@ -36,6 +29,13 @@ public class Agencia {
 		return false;
 	}
 
+	public void fecharConta(int numero) {
+		Conta conta = buscarConta(numero);
+		if (conta != null) {
+			this.contas.remove(conta);
+		}
+	}
+	
 	public void fecharContaVip(int numero) {
 		ContaVip conta = buscarContaVip(numero);
 		if (conta != null) {
@@ -71,6 +71,17 @@ public class Agencia {
 		}
 		return false;
 	}
+	
+	public boolean sacarContaVip(int numCont, float valor){
+		ContaVip contaVip = buscarContaVip(numCont);
+		if(contaVip != null){
+			if (contaVip.sacar(valor)){
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
 
 	public float saldoFinal(int numCont) {
 		Conta conta = buscarConta(numCont);
@@ -79,9 +90,28 @@ public class Agencia {
 		}
 		return -1;
 	}
+
+	public float saldoFinalVip(int numCont) {
+		ContaVip conta = buscarContaVip(numCont);
+		if (conta != null) {
+			return conta.mostrarSaldo();
+		}
+		return -1;
+	}
 	
 	public boolean depositar(int numCont, float valor) {
 		Conta conta = buscarConta(numCont);
+		if (conta != null) {
+			if (conta.depositar(valor) == true){
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+
+	public boolean depositarContaVip(int numCont, float valor) {
+		ContaVip conta = buscarContaVip(numCont);
 		if (conta != null) {
 			if (conta.depositar(valor) == true){
 				return true;

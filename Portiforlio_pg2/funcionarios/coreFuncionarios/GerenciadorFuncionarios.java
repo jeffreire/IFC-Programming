@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class GerenciadorFuncionarios {
 
 	ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
+	ArrayList<Comercial> fnComerciais = new ArrayList<Comercial>();
 
 	public void cadastrarFuncionario(String cpf, String nome, int id, int idade, float salario) {
 		Funcionario novo = new Funcionario(id, nome, idade, cpf, salario);
@@ -20,10 +21,12 @@ public class GerenciadorFuncionarios {
 		return null;
 	}
 
-	public boolean definirSetor(int id, String novoSetor) {
-		Funcionario funcionario = buscarFuncionario(id);
-		if (funcionario != null ) {
-			funcionario.setor = novoSetor;
+	public boolean definirSetor(int id, String novoSetor, String clausula) {
+		Funcionario fn = buscarFuncionario(id);
+		if( fn != null && novoSetor == "comercial"){
+			fn.setor = novoSetor;
+			Comercial comercial = new Comercial(fn.id, fn.nome, fn.idade, fn.cpf, fn.salario, clausula);
+			this.fnComerciais.add(comercial);
 			return true;
 		}
 		return false;
@@ -31,6 +34,9 @@ public class GerenciadorFuncionarios {
 
 	public void calcularReajuste(float aumento) {
 		for (Funcionario funcionario : funcionarios) {
+			if (funcionario.setor == "comercial") {
+				funcionario.salario *= (aumento+1)+3;
+			}
 			funcionario.salario *= (aumento + 1);
 		}
 	}
@@ -41,8 +47,15 @@ public class GerenciadorFuncionarios {
 				funcionario.demitir();
 				break;
 			}
+			else if (funcionario.id == id && funcionario.setor == "comercial") {
+				funcionario.demitir();
+				for (Comercial comercial : fnComerciais){
+					if (funcionario.id == comercial.id){
+						comercial.demitir();
+					}
+				}
+			}
 		}
-
 	}
 
 	public ArrayList<Funcionario> listarDemitidos() {

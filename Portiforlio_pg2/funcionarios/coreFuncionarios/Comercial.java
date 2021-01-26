@@ -1,7 +1,7 @@
 package funcionarios.coreFuncionarios;
 
 public class Comercial  extends Funcionario {
-  public String clausula;
+  private String clausula;
   
   public Comercial(
     int id, 
@@ -13,5 +13,9 @@ public class Comercial  extends Funcionario {
   {
     super(id, nome, idade, cpf, salario);
     this.clausula = clausula;
+  }
+
+  public String getClausula() {
+    return this.clausula;
   }
 }

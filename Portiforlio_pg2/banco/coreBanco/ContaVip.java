@@ -1,7 +1,7 @@
 package banco.coreBanco; 
 
 public class ContaVip extends Conta {
-  private float saldo = 5000;
+  private float saldo;
  
   public ContaVip(Usuario usuario) {
     super(usuario);

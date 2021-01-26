@@ -124,6 +124,6 @@ public class Biblioteca {
 	
 	public void trocarSituacao(String titulo) {
 		Livro livro = buscar("titulo", titulo);
-		livro.emprestado = ! livro.emprestado;
+		livro.emprestado = !livro.emprestado;
 	}
 }
