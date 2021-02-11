@@ -20,6 +20,7 @@ public class Banco {
 	public ArrayList<Usuario> getUsuarios(){
 		return this.usuarios;
 	}
+	
 	public ArrayList<Agencia> getAgencias(){
 		return this.agencias;
 	}
@@ -30,12 +31,6 @@ public class Banco {
 	}
 
 	public void cadastrarConta(String cpf, int numAg) {
-		Agencia ag = buscarAgencia(numAg);
-		Usuario usuario = buscarUsuario(cpf);
-		ag.abrirConta(usuario);
-	}
-
-	public void cadastrarContaVip(String cpf, int numAg) {
 		Agencia ag = buscarAgencia(numAg);
 		Usuario usuario = buscarUsuario(cpf);
 		ag.abrirConta(usuario);

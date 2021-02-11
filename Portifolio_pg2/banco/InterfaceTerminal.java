@@ -2,9 +2,9 @@ package banco;
 
 import banco.coreBanco.Agencia;
 import banco.coreBanco.Banco;
-import banco.coreBanco.Conta;
 import banco.coreBanco.ManipuladorDeBanco;
 import banco.coreBanco.Usuario;
+import interfaces.IConta;
 
 import java.util.Scanner;
 
@@ -121,7 +121,7 @@ public class InterfaceTerminal {
 					numCont = in.nextInt();
 					Usuario usuario = banco.buscarUsuario(cpf);
 					Agencia agencia = banco.buscarAgencia(numAg);
-					Conta conta = agencia.buscarConta(numCont);
+					IConta conta = agencia.buscarConta(numCont);
 
 					ManipuladorDeArquivos manipuladorDeArquivos = new ManipuladorDeArquivos();
 					manipuladorDeArquivos.criarArquivo("teste.bin");

@@ -2,19 +2,20 @@ package funcionarios.coreFuncionarios;
 
 import java.util.ArrayList;
 
+import interfaces.IFuncionario;
+
 public class GerenciadorFuncionarios {
 
-	ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
-	ArrayList<Comercial> fnComerciais = new ArrayList<Comercial>();
+	ArrayList<IFuncionario> funcionarios = new ArrayList<IFuncionario>();
 
 	public void cadastrarFuncionario(String cpf, String nome, int id, int idade, float salario) {
-		Funcionario novo = new Funcionario(id, nome, idade, cpf, salario);
+		IFuncionario novo = new Funcionario(id, nome, idade, cpf, salario);
 		this.funcionarios.add(novo);
 	}
 
-	public Funcionario buscarFuncionario(int id) {
-		for (Funcionario funcionario : funcionarios) {
-			if (funcionario.id == id) {
+	public IFuncionario buscarFuncionario(int id) {
+		for (IFuncionario funcionario : funcionarios) {
+			if (funcionario.getId() == id) {
 				return funcionario;
 			}
 		}
@@ -22,56 +23,58 @@ public class GerenciadorFuncionarios {
 	}
 
 	public boolean definirSetor(int id, String novoSetor, String clausula) {
-		Funcionario fn = buscarFuncionario(id);
-		if( fn != null && novoSetor == "comercial"){
-			fn.setor = novoSetor;
-			Comercial comercial = new Comercial(fn.id, fn.nome, fn.idade, fn.cpf, fn.salario, clausula);
-			this.fnComerciais.add(comercial);
+		IFuncionario fn = buscarFuncionario(id);
+		if(fn != null){
+			fn.setSetor(novoSetor);
 			return true;
 		}
 		return false;
 	}
 
 	public void calcularReajuste(float aumento) {
-		for (Funcionario funcionario : funcionarios) {
-			if (funcionario.setor == "comercial") {
-				funcionario.salario *= (aumento+1)+3;
+		for (IFuncionario fn : funcionarios) {
+			if (fn.getSetor().equals("comercial")) {
+				float salario;
+				salario  = fn.getSalario();
+				salario *= (aumento+1)+3;
+				fn.setSalario(salario);
 			}
-			funcionario.salario *= (aumento + 1);
 		}
 	}
 
 	public void demitir(int id) {
-		for (Funcionario funcionario : funcionarios) {
-			if (funcionario.id == id) {
+		for (IFuncionario funcionario : funcionarios) {
+			if (funcionario.getId() == id) {
 				funcionario.demitir();
 				break;
 			}
-			else if (funcionario.id == id && funcionario.setor == "comercial") {
+			else if (funcionario.getId() == id && funcionario.getSetor().equals("comercial")) {
 				funcionario.demitir();
-				for (Comercial comercial : fnComerciais){
-					if (funcionario.id == comercial.id){
-						comercial.demitir();
+				for (IFuncionario funcionario2 : funcionarios){
+					if (funcionario2.getSetor().equals("comercial")){ 
+						if (funcionario.getId() == funcionario.getId()){
+							funcionario.demitir();
+						}
 					}
 				}
 			}
 		}
 	}
 
-	public ArrayList<Funcionario> listarDemitidos() {
-		ArrayList<Funcionario> lista = new ArrayList<Funcionario>();
-		for (Funcionario funcionario : funcionarios) {
-			if (funcionario.demitido) {
+	public ArrayList<IFuncionario> listarDemitidos() {
+		ArrayList<IFuncionario> lista = new ArrayList<IFuncionario>();
+		for (IFuncionario funcionario : funcionarios) {
+			if (funcionario.getDemitido()) {
 				lista.add(funcionario);
 			}
 		}
 		return lista;
 	}
 
-	public ArrayList<Funcionario> listarNaoDemitidos() {
-		ArrayList<Funcionario> lista = new ArrayList<Funcionario>();
-		for (Funcionario funcionario : funcionarios) {
-			if (!funcionario.demitido) {
+	public ArrayList<IFuncionario> listarNaoDemitidos() {
+		ArrayList<IFuncionario> lista = new ArrayList<IFuncionario>();
+		for (IFuncionario funcionario : funcionarios) {
+			if (!funcionario.getDemitido()) {
 				lista.add(funcionario);
 			}
 		}

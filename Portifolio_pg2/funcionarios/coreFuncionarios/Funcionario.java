@@ -2,7 +2,9 @@ package funcionarios.coreFuncionarios;
 
 import java.util.Date;
 
-public class Funcionario {
+import interfaces.IFuncionario;
+
+public class Funcionario implements IFuncionario{
 	String cpf;
 	public String nome;
 	String setor;
@@ -81,6 +83,30 @@ public class Funcionario {
 		} else {
 			return (false);
 		}
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public String getSetor(){
+		return this.setor;
+	}
+
+	public void setSetor(String newsetor) {
+		this.setor = newsetor;
+	}
+	
+	public float getSalario(){
+		return this.salario;
+	}
+
+	public void setSalario(float newSalario){
+		this.salario = newSalario;
+	}
+
+	public boolean getDemitido(){
+		return this.demitido;
 	}
 
 	@Override

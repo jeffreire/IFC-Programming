@@ -1,6 +1,8 @@
 package banco.coreBanco;
 
-public class Conta {
+import interfaces.IConta;
+
+public class Conta implements IConta{
 
 	static int contas_abertas = 0;
 	int numero;
@@ -37,6 +39,10 @@ public class Conta {
 			return true;
 		}
 		return false;
+	}
+
+	public int getNumero(){
+		return this.numero;
 	}
 
 	public String toString(){

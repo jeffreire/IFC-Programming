@@ -8,7 +8,7 @@ public class teste {
 
     public static void main(String[] args) {
 
-        Livro livro = new Livro("abc", "jeff", "joao", "25/12/2020", true);
+        Livro livro = new Livro("abc", "jeff", "joao", "25/12/2020", true, false);
         ManipuladorDeArquivos manipuladorDeArquivos = new ManipuladorDeArquivos();
 		manipuladorDeArquivos.criarArquivo("teste.bin");
         ManipuladorDeLivros.escreverLivro("livro.txt", livro);

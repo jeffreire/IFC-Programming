@@ -2,14 +2,14 @@ package biblioteca.coreBiblioteca;
 
 import java.util.ArrayList;
 
+import interfaces.ILivro;
+
 public class Biblioteca {
 	
-	ArrayList<Livro> livros;
-	ArrayList<LivroDigital> livrosDigitais;
+	ArrayList<ILivro> livros;
 
 	public Biblioteca() {
-		this.livros = new ArrayList<Livro>();
-		this.livrosDigitais = new ArrayList<LivroDigital>();
+		this.livros = new ArrayList<ILivro>();
 	}
 
 	public void cadastrarLivro(
@@ -19,7 +19,7 @@ public class Biblioteca {
 		String lancamento, 
 		boolean estado) 
 	{
-		Livro novo = new Livro(titulo, isbn, autor, lancamento, estado);
+		Livro novo = new Livro(titulo, isbn, autor, lancamento, estado, false);
 		this.livros.add(novo);
 	}
 
@@ -31,21 +31,12 @@ public class Biblioteca {
 		boolean estado,
 		String url
 	){
-		LivroDigital livroNovo = new LivroDigital(titulo, isbn, autor, lancamento, estado, url);
-		this.livrosDigitais.add(livroNovo);
-	}
-
-	public boolean removerLivroDigital(String titulo) {
-		LivroDigital livro = buscarLivroDigital("titulo", titulo);
-		if (livro != null){
-			this.livrosDigitais.remove(livro);
-			return true;
-		}
-		return false;
+		LivroDigital livroNovo = new LivroDigital(titulo, isbn, autor, lancamento, estado, url, false);
+		this.livros.add(livroNovo);
 	}
 
 	public boolean removerLivro(String titulo) {
-		Livro livro = buscar("titulo", titulo);
+		ILivro livro = buscar("titulo", titulo);
 		if (livro != null) {
 			this.livros.remove(livro);
 			return true;
@@ -53,55 +44,46 @@ public class Biblioteca {
 		return false;
 	}
 
-	public LivroDigital buscarLivroDigital(String campo, String titulo) {
-		for (LivroDigital livro : livrosDigitais) {
-			if (livro.titulo.equals(titulo)) {
-				return livro;
-			}
-		}
-		return null;
-	}	
-
-	public Livro buscar(String campo, String valor){
+	public ILivro buscar(String campo, String valor){
 		switch (campo) {
 		case "titulo":
-			for (Livro livro : livros) {
-				if (livro.titulo.equals(valor)) {
+			for (ILivro livro : livros) {
+				if (livro.getTitulo().equals(valor)) {
 					return livro;
 				}
 			}
 			break;
 		case "isbn":
-			for (Livro livro : livros) {
-				if (livro.isbn.equals(valor)) {
+			for (ILivro livro : livros) {
+				if (livro.getIsbn().equals(valor)) {
 					return livro;
 				}
 			}
 			break;
 		case "autores":
-			for (Livro livro : livros) {
-				if (livro.autor.equals(valor)) {
+			for (ILivro livro : livros) {
+				if (livro.getAutor().equals(valor)) {
 					return livro;
 				}
 			}
 			break;
 		case "lancamento":
-			for (Livro livro : livros) {
-				if (livro.lancamento.toString().equals(valor)) {
+			for (ILivro livro : livros) {
+				if (livro.getLancamento().toString().equals(valor)) {
 					return livro;
 				}
 			}
 			break;
 		case "emprestado":
-			for (Livro livro : livros) {
-				if (livro.emprestado == Boolean.getBoolean(valor)) {
+			for (ILivro livro : livros) {
+				if (livro.getEmprestado() == Boolean.getBoolean(valor)) {
 					return livro;
 				}
 			}
 			break;
 		case "estado":
-			for (Livro livro : livros) {
-				if (livro.estado == Boolean.getBoolean(valor)) {
+			for (ILivro livro : livros) {
+				if (livro.getEstado() == Boolean.getBoolean(valor)) {
 					return livro;
 				}
 			}
@@ -114,16 +96,28 @@ public class Biblioteca {
 	}
 
 	public boolean trocarEstado(String titulo) {
-		Livro livro = buscar("titulo", titulo);
+		ILivro livro = buscar("titulo", titulo);
 		if (livro != null) {
-			livro.estado = ! livro.estado;
+			livro.setEstado(!livro.getEstado());
 			return true;
 		}
 		return false;
 	}
 	
 	public void trocarSituacao(String titulo) {
-		Livro livro = buscar("titulo", titulo);
-		livro.emprestado = !livro.emprestado;
+		ILivro livro = buscar("titulo", titulo);
+		if (livro != null)
+			livro.setEmprestado(!livro.getEmprestado());
 	}
+
+	public boolean trocarURL(String newurl,  String titulo){
+		ILivro livro = buscar("titulo", titulo);
+
+		if (livro != null && livro.getDigital() == true) {
+			livro.setUrl(newurl);
+			return true;
+		}
+		return false;
+	}
+
 }

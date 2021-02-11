@@ -20,7 +20,8 @@ public class ManipuladorDeLivros {
                          dados[1],   
                          dados[2], 
                          dados[3],
-                         Boolean.parseBoolean(dados[4]));
+                         Boolean.parseBoolean(dados[4]),
+                         Boolean.parseBoolean(dados[5]));
 		return livro;
 	}
 }

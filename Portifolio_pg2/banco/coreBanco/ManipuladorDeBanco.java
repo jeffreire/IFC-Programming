@@ -1,10 +1,12 @@
 package banco.coreBanco;
+
 import java.util.ArrayList;
 import arquivos.ManipuladorDeArquivos;
+import interfaces.IConta;
 
 public class ManipuladorDeBanco {
 
-	public static boolean escreverBanco(String caminho, Usuario usuario, Conta conta, Agencia agencia, Banco banco){
+	public static boolean escreverBanco(String caminho, Usuario usuario, IConta conta, Agencia agencia, Banco banco){
 		ManipuladorDeArquivos.escreverArquivo(caminho, usuario.toString());
 		ManipuladorDeArquivos.escreverArquivo(caminho, conta.toString());
 		ManipuladorDeArquivos.escreverArquivo(caminho, agencia.toString());
@@ -21,8 +23,8 @@ public class ManipuladorDeBanco {
 		String[] dados = linha.split(";");
 
 		usuario = new Usuario(dados[0], dados[1]);
-		Conta conta = new Conta(usuario);
-		Agencia agencia = new Agencia();
+		new Conta(usuario);
+		new Agencia();
 		banco = new Banco(dados[2]);
 
 		return banco;
